@@ -1,5 +1,8 @@
 <template>
-  <div></div>
+  <div>
+    <h2>{{ topping.name }}</h2>
+    <img :src="topping.image" alt="" />
+  </div>
 </template>
 
 <script setup>
