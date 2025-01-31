@@ -1,13 +1,7 @@
 <template>
-  <div>
-    <NewList />
-    <form name="login-form" @submit.prevent="login(user)">
-      <label for="username">Enter Username</label>
-      <input type="text" v-model="user.username" />
-      <label for="password">Enter Password</label>
-      <input type="text" v-model="user.password" />
-      <button class="submit-button" type="submit">Login</button>
-    </form>
+  <div class="container">
+    <LogIn message="Hello" />
+    <AnimalCard v-for="animal in animals" :key="animal.name" />
   </div>
 </template>
 
