@@ -10,6 +10,16 @@
 defineProps({
   topping: Object,
 })
+const topping = [
+  { name: 'Seaweed Salad', image: '' },
+  { name: 'Crab Strips', image: '' },
+  { name: 'Wonton Crisps', image: '' },
+  { name: 'Masago', image: '' },
+  { name: 'Cucumber', image: '' },
+  { name: 'Cherry Tomato', image: '' },
+  { name: 'Scallion', image: '' },
+  { name: 'Sweet Corn', image: '' },
+]
 </script>
 
 <style scoped></style>
