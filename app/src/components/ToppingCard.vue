@@ -22,4 +22,8 @@ const topping = [
 ]
 </script>
 
-<style scoped></style>
+<style scoped>
+.card {
+  background-color: aliceblue;
+}
+</style>
