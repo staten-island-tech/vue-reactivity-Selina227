@@ -11,14 +11,14 @@ defineProps({
   topping: Object,
 })
 const topping = [
-  { name: 'Seaweed Salad', image: '' },
-  { name: 'Crab Strips', image: '' },
-  { name: 'Wonton Crisps', image: '' },
-  { name: 'Masago', image: '' },
-  { name: 'Cucumber', image: '' },
-  { name: 'Cherry Tomato', image: '' },
-  { name: 'Scallion', image: '' },
-  { name: 'Sweet Corn', image: '' },
+  { name: 'Seaweed Salad', price: '$3.00', image: '' },
+  { name: 'Crab Strips', price: '$2.00', image: '' },
+  { name: 'Wonton Crisps', price: '$1.50', image: '' },
+  { name: 'Masago', price: '$3.00', image: '' },
+  { name: 'Cucumber', price: '$1.00', image: '' },
+  { name: 'Cherry Tomato', price: '$1.50', image: '' },
+  { name: 'Scallion', price: '$1.00', image: '' },
+  { name: 'Sweet Corn', price: '$1.00', image: '' },
 ]
 </script>
 
