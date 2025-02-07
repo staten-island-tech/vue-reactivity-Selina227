@@ -8,7 +8,7 @@
 
 <script setup>
 defineProps({
-  topping: Object,
+  topping: Array,
 })
 const topping = [
   { name: 'Seaweed Salad', price: '$3.00', image: '' },
