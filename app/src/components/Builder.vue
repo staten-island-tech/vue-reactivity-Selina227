@@ -1,9 +1,9 @@
 <template>
   <div class="bowl-builder">
-    <h2>Design Your Own Poke Bowl</h2>
+    <h2 class="head">Design Your Own Poke Bowl</h2>
 
-    <div class="bowl-container">
-      <img src="/bowl.png" alt="Base Bowl" class="bowl" />
+    <div>
+      <img src="/bowl.png" alt="bowl" class="bowl" />
       <img
         v-for="topping in selectedToppings"
         :key="topping.id"
@@ -20,7 +20,7 @@
         class="topping-item"
         @click="placeTopping(topping)"
       >
-        <img :src="topping.image" :alt="topping.name" class="topping-icon" />
+        <img :src="topping.image" :alt="topping.name" class="topping-img" />
         <h3>{{ topping.name }}</h3>
         <p>{{ topping.price }}</p>
       </div>
@@ -42,7 +42,7 @@ const toppings = ref([
   { id: 8, name: 'Sweet Corn', price: '$1.00', image: '/corn.png' },
 ])
 
-const selectedToppings = ref([])
+const selectedToppings = ref([toppings])
 
 function placeTopping(topping) {
   const index = selectedToppings.value.findIndex((t) => t.id === topping.id)
@@ -55,42 +55,54 @@ function placeTopping(topping) {
 </script>
 
 <style scoped>
+*,
+body,
+html {
+  padding: 0%;
+  margin: 0%;
+  box-sizing: border-box;
+  align-items: center;
+  font-size: 10px;
+}
+
 .bowl-builder {
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 30px;
+  row-gap: 2rem;
 }
 
-.bowl-container {
-  width: 300px;
-  height: 300px;
+.head {
+  text-align: center;
+  font-size: 2rem;
 }
 
 .bowl {
-  width: 100%;
+  width: 30rem;
+  height: 30rem;
 }
 
 .topping {
   position: absolute;
-  width: 100px;
-  top: 50px;
-  left: 50px;
+  width: 25rem;
+  height: 25rem;
+  right: 47rem;
+  top: 7rem;
 }
 
 .toppings-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 .topping-item {
   text-align: center;
 }
 
-.topping-icon {
-  width: 50px;
-  height: 50px;
+.topping-img {
+  width: 130px;
+  height: 100px;
 }
 </style>
