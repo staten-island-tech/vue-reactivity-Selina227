@@ -12,8 +12,8 @@
         class="topping"
       />
     </div>
-
-    <div class="toppings-list">
+    <h3 class="head">Toppings</h3>
+    <div class="max-w-sm rounded overflow-hidden shadow-lg w-full flex items-center">
       <div
         v-for="topping in toppings"
         :key="topping.id"
@@ -55,6 +55,7 @@ function placeTopping(topping) {
 </script>
 
 <style scoped>
+@import 'tailwindcss';
 *,
 body,
 html {
