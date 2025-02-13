@@ -2,27 +2,65 @@
   <div class="bowl-builder">
     <h2 class="head">Design Your Own Poke Bowl</h2>
 
-    <div>
-      <img src="/bowl.png" alt="bowl" class="bowl" />
-      <img
-        v-for="topping in selectedToppings"
-        :key="topping.id"
-        :src="topping.image"
-        :alt="topping.name"
-        class="topping"
-      />
+    <Bowl :ingredients="ingredients" />
+
+    <!-- Base Selection -->
+    <h3 class="section-title">Base</h3>
+    <div class="options">
+      <div
+        v-for="base in bases"
+        :key="base.id"
+        class="option-item"
+        :class="{ selected: ingredients.base === base.name }"
+        @click="selectBase(base.name)"
+      >
+        <img :src="base.image" :alt="base.name" />
+        <p>{{ base.name }}</p>
+      </div>
     </div>
-    <h3 class="head">Toppings</h3>
-    <div class="max-w-sm rounded overflow-hidden shadow-lg w-full flex items-center">
+
+    <!-- Protein Selection -->
+    <h3 class="section-title">Protein</h3>
+    <div class="options">
+      <div
+        v-for="protein in proteins"
+        :key="protein.id"
+        class="option-item"
+        :class="{ selected: ingredients.protein === protein.name }"
+        @click="selectProtein(protein.name)"
+      >
+        <img :src="protein.image" :alt="protein.name" />
+        <p>{{ protein.name }}</p>
+      </div>
+    </div>
+
+    <!-- Toppings Selection -->
+    <h3 class="section-title">Toppings</h3>
+    <div class="options">
       <div
         v-for="topping in toppings"
         :key="topping.id"
-        class="topping-item"
-        @click="placeTopping(topping)"
+        class="option-item"
+        :class="{ selected: selectedToppings.includes(topping.name) }"
+        @click="toggleTopping(topping.name)"
       >
-        <img :src="topping.image" :alt="topping.name" class="topping-img" />
-        <h3>{{ topping.name }}</h3>
-        <p>{{ topping.price }}</p>
+        <img :src="topping.image" :alt="topping.name" />
+        <p>{{ topping.name }}</p>
+      </div>
+    </div>
+
+    <!-- Extras Selection -->
+    <h3 class="section-title">Extras</h3>
+    <div class="options">
+      <div
+        v-for="extra in extras"
+        :key="extra.id"
+        class="option-item"
+        :class="{ selected: selectedExtras.includes(extra.name) }"
+        @click="toggleExtra(extra.name)"
+      >
+        <img :src="extra.image" :alt="extra.name" />
+        <p>{{ extra.name }}</p>
       </div>
     </div>
   </div>
@@ -30,9 +68,21 @@
 
 <script setup>
 import { ref } from 'vue'
+import Bowl from './Bowl.vue'
+
+// Sample Data
+const bases = ref([
+  { id: 1, name: 'WhiteRice', image: '/white_rice.png' },
+  { id: 2, name: 'BrownRice', image: '/brown_rice.png' },
+])
+
+const proteins = ref([
+  { id: 1, name: 'Salmon', image: '/salmon.png' },
+  { id: 2, name: 'Tuna', image: '/tuna.png' },
+])
 
 const toppings = ref([
-  { id: 1, name: 'Seaweed Salad', price: '$3.00', image: 'seaweed.png' },
+  { id: 1, name: 'Seaweed Salad', price: '$3.00', image: '/seaweed.png' },
   { id: 2, name: 'Crab Strips', price: '$2.00', image: '/toppings/crab.png' },
   { id: 3, name: 'Wonton Crisps', price: '$1.50', image: '/wonton.png' },
   { id: 4, name: 'Masago', price: '$3.00', image: '/masago.png' },
@@ -42,68 +92,86 @@ const toppings = ref([
   { id: 8, name: 'Sweet Corn', price: '$1.00', image: '/corn.png' },
 ])
 
-const selectedToppings = ref([toppings])
+const extras = ref([
+  { id: 1, name: 'WontonCrisps', image: '/wonton.png' },
+  { id: 2, name: 'Masago', image: '/masago.png' },
+])
 
-function placeTopping(topping) {
-  const index = selectedToppings.value.findIndex((t) => t.id === topping.id)
+// State for selections
+const selectedBase = ref(null)
+const selectedProtein = ref(null)
+const selectedToppings = ref([])
+const selectedExtras = ref([])
+
+// Computed to build the ingredients object
+const ingredients = {
+  base: selectedBase.value,
+  protein: selectedProtein.value,
+  toppings: selectedToppings.value,
+  extras: selectedExtras.value,
+}
+
+// Selection Handlers
+function selectBase(base) {
+  selectedBase.value = base
+}
+
+function selectProtein(protein) {
+  selectedProtein.value = protein
+}
+
+function toggleTopping(topping) {
+  const index = selectedToppings.value.indexOf(topping)
   if (index === -1) {
     selectedToppings.value.push(topping)
   } else {
     selectedToppings.value.splice(index, 1)
   }
 }
+
+function toggleExtra(extra) {
+  const index = selectedExtras.value.indexOf(extra)
+  if (index === -1) {
+    selectedExtras.value.push(extra)
+  } else {
+    selectedExtras.value.splice(index, 1)
+  }
+}
 </script>
 
 <style scoped>
-@import 'tailwindcss';
-*,
-body,
-html {
-  padding: 0%;
-  margin: 0%;
-  box-sizing: border-box;
-  align-items: center;
-  font-size: 10px;
-}
-
 .bowl-builder {
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 2rem;
+  gap: 1.5rem;
 }
 
-.head {
-  text-align: center;
-  font-size: 2rem;
+.section-title {
+  font-size: 1.5rem;
+  margin-top: 1rem;
 }
 
-.bowl {
-  width: 30rem;
-  height: 30rem;
-}
-
-.topping {
-  position: absolute;
-  width: 25rem;
-  height: 25rem;
-  right: 47rem;
-  top: 7rem;
-}
-
-.toppings-list {
+.options {
   display: flex;
-  flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 2rem;
 }
 
-.topping-item {
+.option-item {
+  cursor: pointer;
   text-align: center;
+  border: 1px solid transparent;
+  padding: 0.5rem;
+  transition: 0.3s;
 }
 
-.topping-img {
-  width: 130px;
-  height: 100px;
+.option-item img {
+  width: 80px;
+  height: 80px;
+}
+
+.option-item.selected {
+  border-color: #4caf50;
+  background-color: #f0fdf4;
 }
 </style>

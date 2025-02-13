@@ -1,24 +1,13 @@
 <template>
   <div class="bowl">
-    <img src="/bowl-base.png" class="bowl-base" />
+    <img src="/bowl.png" class="bowl-base" />
 
-    <img
-      v-if="ingredients.base"
-      :src="`/${ingredients.base}.png`"
-      :alt="topping.name"
-      class="ingredient"
-    />
-    <img
-      v-if="ingredients.protein"
-      :src="`/${ingredients.protein}.png`"
-      :alt="topping.name"
-      class="ingredient"
-    />
+    <img v-if="ingredients.base" :src="`/${ingredients.base}.png`" class="ingredient" />
+    <img v-if="ingredients.protein" :src="`/${ingredients.protein}.png`" class="ingredient" />
     <img
       v-for="topping in ingredients.toppings"
       :key="topping"
       :src="`/${topping}.png`"
-      :alt="topping.name"
       class="ingredient"
     />
     <img
@@ -31,10 +20,28 @@
 </template>
 
 <script setup>
-import Builder from './components/Builder.vue'
 defineProps({
   ingredients: Object,
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.bowl {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.bowl-base {
+  width: 100%;
+  height: 100%;
+}
+
+.ingredient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
