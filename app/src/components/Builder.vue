@@ -70,7 +70,6 @@
 import { ref } from 'vue'
 import Bowl from './Bowl.vue'
 
-// Sample Data
 const bases = ref([
   { id: 1, name: 'WhiteRice', image: '/white_rice.png' },
   { id: 2, name: 'BrownRice', image: '/brown_rice.png' },
@@ -97,13 +96,11 @@ const extras = ref([
   { id: 2, name: 'Masago', image: '/masago.png' },
 ])
 
-// State for selections
-const selectedBase = ref(null)
-const selectedProtein = ref(null)
+const selectedBase = ref([])
+const selectedProtein = ref([])
 const selectedToppings = ref([])
 const selectedExtras = ref([])
 
-// Computed to build the ingredients object
 const ingredients = {
   base: selectedBase.value,
   protein: selectedProtein.value,
@@ -111,7 +108,6 @@ const ingredients = {
   extras: selectedExtras.value,
 }
 
-// Selection Handlers
 function selectBase(base) {
   selectedBase.value = base
 }
