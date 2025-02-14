@@ -4,7 +4,6 @@
 
     <Bowl :ingredients="ingredients" />
 
-    <!-- Base Selection -->
     <h3 class="section-title">Base</h3>
     <div class="options">
       <div
@@ -19,7 +18,6 @@
       </div>
     </div>
 
-    <!-- Protein Selection -->
     <h3 class="section-title">Protein</h3>
     <div class="options">
       <div
@@ -34,7 +32,6 @@
       </div>
     </div>
 
-    <!-- Toppings Selection -->
     <h3 class="section-title">Toppings</h3>
     <div class="options">
       <div
@@ -49,7 +46,6 @@
       </div>
     </div>
 
-    <!-- Extras Selection -->
     <h3 class="section-title">Extras</h3>
     <div class="options">
       <div
