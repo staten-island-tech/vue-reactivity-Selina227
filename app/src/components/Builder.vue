@@ -3,6 +3,7 @@
     <h2 class="head">Design Your Own Poke Bowl</h2>
 
     <Bowl :ingredients="ingredients" />
+    <Order :ingredients="ingredients" />
 
     <h3 class="section-title">Base</h3>
     <div class="options">
@@ -44,20 +45,8 @@
         <img :src="topping.image" :alt="topping.name" />
         <p>{{ topping.name }}</p>
       </div>
-    </div>
-
-    <h3 class="section-title">Extras</h3>
-    <div class="options">
-      <div
-        v-for="extra in extras"
-        :key="extra.id"
-        class="option-item"
-        :class="{ selected: selectedExtras.includes(extra.name) }"
-        @click="toggleExtra(extra.name)"
-      >
-        <img :src="extra.image" :alt="extra.name" />
-        <p>{{ extra.name }}</p>
-      </div>
+      <button @click="showOrder = true">View Order</button>
+      <Order v-if="showOrder" :ingredients="ingredients" />
     </div>
   </div>
 </template>
@@ -65,43 +54,36 @@
 <script setup>
 import { ref } from 'vue'
 import Bowl from './Bowl.vue'
+import Order from './Order.vue'
+const showOrder = ref(false)
 
 const bases = ref([
-  { id: 1, name: 'WhiteRice', image: '/white_rice.png' },
-  { id: 2, name: 'BrownRice', image: '/brown_rice.png' },
+  { id: 1, name: 'White Rice', image: '/white-rice.png' },
+  { id: 2, name: 'Brown Rice', image: '/brown-rice.png' },
 ])
 
 const proteins = ref([
   { id: 1, name: 'Salmon', image: '/salmon.png' },
-  { id: 2, name: 'Tuna', image: '/tuna.png' },
+  { id: 2, name: 'Chicken', image: '/chicken.png' },
 ])
 
 const toppings = ref([
   { id: 1, name: 'Seaweed Salad', price: '$3.00', image: '/seaweed.png' },
-  { id: 2, name: 'Crab Strips', price: '$2.00', image: '/toppings/crab.png' },
+  { id: 2, name: 'Crab Strips', price: '$2.00', image: '/crab-stick.png' },
   { id: 3, name: 'Wonton Crisps', price: '$1.50', image: '/wonton.png' },
-  { id: 4, name: 'Masago', price: '$3.00', image: '/masago.png' },
-  { id: 5, name: 'Cucumber', price: '$1.00', image: 'cucumber.png' },
-  { id: 6, name: 'Cherry Tomato', price: '$1.50', image: '/tomato.png' },
-  { id: 7, name: 'Scallion', price: '$1.00', image: '/scallion.png' },
-  { id: 8, name: 'Sweet Corn', price: '$1.00', image: '/corn.png' },
-])
-
-const extras = ref([
-  { id: 1, name: 'WontonCrisps', image: '/wonton.png' },
-  { id: 2, name: 'Masago', image: '/masago.png' },
+  { id: 4, name: 'Cucumber', price: '$1.00', image: 'cucumber.png' },
+  { id: 5, name: 'Scallion', price: '$1.00', image: '/scallion.png' },
+  { id: 6, name: 'Sweet Corn', price: '$1.00', image: '/corn.png' },
 ])
 
 const selectedBase = ref([])
 const selectedProtein = ref([])
 const selectedToppings = ref([])
-const selectedExtras = ref([])
 
 const ingredients = {
   base: selectedBase.value,
   protein: selectedProtein.value,
   toppings: selectedToppings.value,
-  extras: selectedExtras.value,
 }
 
 function selectBase(base) {
@@ -120,15 +102,6 @@ function toggleTopping(topping) {
     selectedToppings.value.splice(index, 1)
   }
 }
-
-function toggleExtra(extra) {
-  const index = selectedExtras.value.indexOf(extra)
-  if (index === -1) {
-    selectedExtras.value.push(extra)
-  } else {
-    selectedExtras.value.splice(index, 1)
-  }
-}
 </script>
 
 <style scoped>
@@ -136,7 +109,8 @@ function toggleExtra(extra) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  justify-content: center;
+  text-align: center;
 }
 
 .section-title {
@@ -146,7 +120,9 @@ function toggleExtra(extra) {
 
 .options {
   display: flex;
+  justify-content: center;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .option-item {
