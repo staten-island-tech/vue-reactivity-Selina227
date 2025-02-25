@@ -3,8 +3,8 @@
     <h2>Your Poke Bowl Order</h2>
 
     <div class="order-details">
-      <p><strong>Base:</strong> {{ ingredients.base || 'None selected' }}</p>
-      <p><strong>Protein:</strong> {{ ingredients.protein || 'None selected' }}</p>
+      <p><strong>Base:</strong> {{ ingredients.bases || 'None selected' }}</p>
+      <p><strong>Protein:</strong> {{ ingredients.proteins || 'None selected' }}</p>
 
       <p><strong>Toppings:</strong></p>
       <ul>
@@ -25,7 +25,9 @@ const props = defineProps({
 })
 
 const placeOrder = () => {
-  alert('Your order has been placed! 🎉')
+  alert(
+    `Your order has been placed! 🎉\n\nBase: ${props.ingredients.bases || 'None'}\nProtein: ${props.ingredients.proteins || 'None'}\nToppings: ${props.ingredients.toppings || 'None'}`,
+  )
 }
 </script>
 
@@ -36,9 +38,9 @@ const placeOrder = () => {
   align-items: center;
   text-align: center;
   padding: 2rem;
-  border: 2px solid #4caf50;
+  border: 2px solid salmon;
   border-radius: 10px;
-  background-color: #f0fdf4;
+  background-color: pink;
   width: 400px;
   margin: auto;
 }

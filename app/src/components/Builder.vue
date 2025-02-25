@@ -1,32 +1,33 @@
 <template>
-  <div class="bowl-builder">
+  <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
     <h2 class="head">Design Your Own Poke Bowl</h2>
 
-    <Bowl :ingredients="ingredients" />
-    <Order :ingredients="ingredients" />
+    <div class="relative">
+      <Bowl :ingredients="ingredients" />
+    </div>
 
-    <h3 class="section-title">Base</h3>
+    <h3 class="section-title">Bases</h3>
     <div class="options">
       <div
         v-for="base in bases"
         :key="base.id"
         class="option-item"
         :class="{ selected: ingredients.base === base.name }"
-        @click="selectBase(base.name)"
+        @click="toggleBase(base.name)"
       >
         <img :src="base.image" :alt="base.name" />
         <p>{{ base.name }}</p>
       </div>
     </div>
 
-    <h3 class="section-title">Protein</h3>
+    <h3 class="section-title">Proteins</h3>
     <div class="options">
       <div
         v-for="protein in proteins"
         :key="protein.id"
         class="option-item"
         :class="{ selected: ingredients.protein === protein.name }"
-        @click="selectProtein(protein.name)"
+        @click="toggleProtein(protein.name)"
       >
         <img :src="protein.image" :alt="protein.name" />
         <p>{{ protein.name }}</p>
@@ -45,7 +46,11 @@
         <img :src="topping.image" :alt="topping.name" />
         <p>{{ topping.name }}</p>
       </div>
-      <button @click="showOrder = true">View Order</button>
+
+      <div class="w-full flex justify-center mt-4">
+        <button @click="showOrder = true">View Order</button>
+      </div>
+
       <Order v-if="showOrder" :ingredients="ingredients" />
     </div>
   </div>
@@ -65,15 +70,16 @@ const bases = ref([
 const proteins = ref([
   { id: 1, name: 'Salmon', image: '/salmon.png' },
   { id: 2, name: 'Chicken', image: '/chicken.png' },
+  { id: 3, name: 'Steak', image: '/steak.png' },
 ])
 
 const toppings = ref([
-  { id: 1, name: 'Seaweed Salad', price: '$3.00', image: '/seaweed.png' },
-  { id: 2, name: 'Crab Strips', price: '$2.00', image: '/crab-stick.png' },
-  { id: 3, name: 'Wonton Crisps', price: '$1.50', image: '/wonton.png' },
-  { id: 4, name: 'Cucumber', price: '$1.00', image: 'cucumber.png' },
-  { id: 5, name: 'Scallion', price: '$1.00', image: '/scallion.png' },
-  { id: 6, name: 'Sweet Corn', price: '$1.00', image: '/corn.png' },
+  { id: 1, name: 'Seaweed Salad', image: '/seaweed.png' },
+  { id: 2, name: 'Crab Strips', image: '/crab-stick.png' },
+  { id: 3, name: 'Wonton Crisps', image: '/wonton.png' },
+  { id: 4, name: 'Cucumber', image: 'cucumber.png' },
+  { id: 5, name: 'Scallion', image: '/scallion.png' },
+  { id: 6, name: 'Sweet Corn', image: '/corn.png' },
 ])
 
 const selectedBase = ref([])
@@ -81,17 +87,27 @@ const selectedProtein = ref([])
 const selectedToppings = ref([])
 
 const ingredients = {
-  base: selectedBase.value,
-  protein: selectedProtein.value,
+  bases: selectedBase.value,
+  proteins: selectedProtein.value,
   toppings: selectedToppings.value,
 }
 
-function selectBase(base) {
-  selectedBase.value = base
+function toggleBase(base) {
+  const index = selectedBase.value.indexOf(base)
+  if (index === -1) {
+    selectedBase.value.push(base)
+  } else {
+    selectedBase.value.splice(index, 1)
+  }
 }
 
-function selectProtein(protein) {
-  selectedProtein.value = protein
+function toggleProtein(protein) {
+  const index = selectedProtein.value.indexOf(protein)
+  if (index === -1) {
+    selectedProtein.value.push(protein)
+  } else {
+    selectedProtein.value.splice(index, 1)
+  }
 }
 
 function toggleTopping(topping) {
@@ -109,7 +125,6 @@ function toggleTopping(topping) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   text-align: center;
 }
 
@@ -126,11 +141,17 @@ function toggleTopping(topping) {
 }
 
 .option-item {
-  cursor: pointer;
   text-align: center;
-  border: 1px solid transparent;
+  border: 1px solid;
   padding: 0.5rem;
-  transition: 0.3s;
+  background-color: pink;
+  border-radius: 8px;
+  border-color: salmon;
+}
+
+.option-item:hover {
+  transition: transform 1s ease;
+  transform: scale(1.1) translateY(-10px);
 }
 
 .option-item img {
@@ -139,7 +160,7 @@ function toggleTopping(topping) {
 }
 
 .option-item.selected {
-  border-color: #4caf50;
+  border-color: #af4c4c;
   background-color: #f0fdf4;
 }
 </style>
